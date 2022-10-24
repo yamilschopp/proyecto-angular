@@ -8,7 +8,12 @@ import { ContenidoComponent } from './components/contenido/contenido.component';
 import { FormularioComponent } from './components/formulario/formulario.component';
 import { TablaComponent } from './components/tabla/tabla.component';
 import { PadreComponent } from './components/padre/padre.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
+import { NombreApellidoPipe } from './pipes/nombre-apellido.pipe';
+import { CabeceraLetraDirective } from './directives/cabecera-letra.directive';
+import { AltaUsuarioComponent } from './components/alta-usuario/alta-usuario.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +23,17 @@ import { ReactiveFormsModule } from '@angular/forms';
     ContenidoComponent,
     FormularioComponent,
     TablaComponent,
-    PadreComponent
+    PadreComponent,
+    NombreApellidoPipe,
+    CabeceraLetraDirective,
+    AltaUsuarioComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

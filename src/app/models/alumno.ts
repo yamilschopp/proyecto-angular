@@ -1,5 +1,5 @@
-export interface Estudiante {
-    legajo: number;
+export interface Alumno {
+    id: number;
     nombre: string;
     apellido: string;
     dni: number;
