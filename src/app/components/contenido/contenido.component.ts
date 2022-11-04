@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AltaUsuarioComponent } from '../alta-usuario/alta-usuario.component';
 import { Datos } from 'src/app/data/alumnos';
 import { Alumno } from 'src/app/models/alumno';
+import { AlumnoService } from 'src/app/servicios/alumno.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -57,12 +59,33 @@ export class ContenidoComponent implements OnInit {
   //     curso: 'Phyton',
   //   },
   // ]
-  alumnos: Alumno[] = Datos.alumnos;
+  //alumnos: Alumno[] = Datos.alumnos;
+  alumnos!: Alumno[];
   columnas: string[] = ['nombre', 'dni', 'curso', 'acciones'];
-  dataSource: MatTableDataSource<Alumno> = new MatTableDataSource<Alumno>(this.alumnos);
+  //dataSource: MatTableDataSource<Alumno> = new MatTableDataSource<Alumno>(this.alumnos);
+  dataSource!: MatTableDataSource<Alumno>;
+  //promesa: any;
+  suscripcion: any;
+  alumnoService: any;
 
   constructor(private dialog: MatDialog) { }
   ngOnInit(): void {
+    /* this.promesa = this.alumnoService.obtenerAlumnosPromise()
+         .then((valor: Alumno[]) => {
+          console.log(valor);
+          this.alumnos = valor;
+          this.dataSource = new MatTableDataSource<Alumno>(this.alumnos);
+         }).catch((error: any) => {
+            console.log(error);
+         });*/
+         this.suscripcion = this.alumnoService.obtenerAlumnos().subscribe((datos: Alumno[]) =>{
+          this.alumnos = datos;
+          this.dataSource = new MatTableDataSource<Alumno>(this.alumnos);
+         })
+  }
+
+  ngOnDestroy(){
+    this.suscripcion.unsubscribe();
   }
 
   borrar(id : number)
