@@ -1,0 +1,47 @@
+<div class="content-fluid">
+    <div class="row justify-content-md-center">
+        <div class="col-md-9">
+            <mat-accordion>
+                <ng-container *ngFor="let item of joinedCursos">
+                  <mat-expansion-panel (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false" class="marginTop">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <div class="title"> {{item.nombre}} - {{item.profesor}} </div> - Comision: {{item.id}} - {{item.inicio | date: 'dd/MM/YYYY'}} - {{item.fin | date: 'dd/MM/YYYY'}}
+                      <div class="availability"  [ngClass]="item.available ==true? available : unavailable">
+                        {{item.available | convertirBooleano: "(Available)": "(Unavailable)"}}
+                      </div>
+                    </mat-panel-title>
+                    <mat-panel-description class="displayNone">
+                        {{panelOpenState ? 'open' : 'closed'}}
+                    </mat-panel-description>
+                    <button mat-icon-button (click)="editar(item.id)">
+                      <mat-icon color="primary">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="eliminar(item.id)">
+                      <mat-icon color="warn">delete</mat-icon>
+                    </button>
+                  </mat-expansion-panel-header>
+                  <h4>Alumnos</h4>
+                  <hr>
+                  <button  mat-mini-fab color="accent" *ngIf="item.available ==true" (click)="agregarEstudiante(item.id, item.nombre +'-'+item.profesor)">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                  <div class="row">
+                    <ng-container *ngFor="let item2 of joinedEstudiantes">
+                        <div class="col-md-6" *ngIf="item2.idClase === item.id && item2.deleted == false && item2.idClase !==0">
+                          Dni: {{item2.dni}} - {{item2.apellido | uppercase}}, {{item2.nombre}}
+                          <button mat-icon-button (click)="eliminarEstudiante(item2.idStudent, item.id)">
+                            <mat-icon color="warn">delete</mat-icon>
+                          </button>
+                        </div>
+                  </ng-container>
+                  </div>
+                  
+                </mat-expansion-panel>
+                </ng-container>
+            </mat-accordion>
+        </div>
+
+    </div>
+</div>

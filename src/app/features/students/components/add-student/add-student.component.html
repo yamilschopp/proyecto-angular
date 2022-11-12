@@ -1,0 +1,58 @@
+<div class="container-fluid text-center">
+    <div class="row justify-content-md-center">
+        <form [formGroup]="formStudent" class="backGround">
+            
+            <div class="row justify-content-md-center">
+            <div class="col-md-3">
+                <mat-form-field appearance="fill" >
+                    <mat-label>Dni del Estudiante</mat-label>
+                    <input matInput formControlName="dni" class="colorFont">
+                </mat-form-field>
+
+                
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="fill">
+                    <mat-label>Nombre del Estudiante</mat-label>
+                    <input matInput formControlName="nombre" class="colorFont">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="fill">
+                    <mat-label>Apellido del Estudiante</mat-label>
+                    <input matInput formControlName="apellido" class="colorFont">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="fill">
+                    <mat-label >Fecha de Nacimiento</mat-label>
+                    <input matInput [matDatepicker]="fechaNacimiento" formControlName="fechaNacimiento" class="colorFont">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+                    <mat-datepicker #fechaNacimiento></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" class="fill">
+                    <mat-label >Fecha de Alta</mat-label>
+                    <input matInput [matDatepicker]="fechaAlta" formControlName="fechaAlta" class="colorFont">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="fechaAlta"></mat-datepicker-toggle>
+                    <mat-datepicker #fechaAlta></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+        </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-12">
+                    <button mat-raised-button color="primary" type="submit" (click)="save()" [disabled]="formStudent.invalid">Agregar estudiante</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    
+</div>
+

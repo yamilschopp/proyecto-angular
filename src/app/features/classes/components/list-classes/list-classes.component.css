@@ -1,0 +1,20 @@
+.displayNone{
+    display: none;
+}
+.availability{
+    font-size: small;
+    margin-left: 5px;
+    font-style: italic;
+}
+.available{
+    color: rgb(43, 143, 0);
+}
+.unavailable{
+    color:deeppink ;
+}
+.title{
+    color: #000000;
+}
+.marginTop{
+    margin-top: 10px;
+}

@@ -1,0 +1,27 @@
+<div class="container-fluid">
+    <div class="row justify-content-md-center marginTop">
+        
+        <div *ngFor="let curso of cursos$ | async" class="col-md-3 cardsize cardMargin marginTop">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>{{ curso.nombre }}</mat-card-title>
+                <mat-card-subtitle>{{ curso.id }}</mat-card-subtitle>
+            </mat-card-header>
+        
+            <img mat-card-image [src]="curso.img" class="cardImgSize" alt="">
+        
+            <mat-card-content>
+                <p>Impartido por {{ curso.profesor }}</p>
+            </mat-card-content>
+        
+            <mat-card-actions align="end">
+                <button mat-icon-button color="primary" (click)="editarCurso(curso.id)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="eliminarCurso(curso.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+        </div>
+</div>

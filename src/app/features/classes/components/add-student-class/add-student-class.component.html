@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <h3>Comision: {{id}}- Curso: {{nombreCurso}}</h3>
+    <div class="row justify-content-md-center marginTop">
+        
+        <div *ngFor="let item of estudiantes$ |async" class="col-md-3 cardsize cardMargin marginTop">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>DNI: {{ item.dni }}</mat-card-title>
+                <mat-card-subtitle>Nombre: {{item.apellido}}, {{ item.nombre }}</mat-card-subtitle>
+            </mat-card-header>
+          
+            <mat-card-content>
+                <p>Nacimiento {{ item.fechaNacimiento | date: 'dd/MM/YYYY' }}</p>
+                <p>Alta {{ item.fechaAlta | date: 'dd/MM/YYYY' }}</p>
+            </mat-card-content>
+        
+            <mat-card-actions align="end">
+                <button mat-icon-button color="warn" (click)="agregar(item.idStudent)">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+        </div>
+</div>

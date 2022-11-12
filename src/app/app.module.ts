@@ -1,41 +1,27 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { ContenidoComponent } from './components/contenido/contenido.component';
-import { FormularioComponent } from './components/formulario/formulario.component';
-import { TablaComponent } from './components/tabla/tabla.component';
-import { PadreComponent } from './components/padre/padre.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material.module';
-import { NombreApellidoPipe } from './pipes/nombre-apellido.pipe';
-import { CabeceraLetraDirective } from './directives/cabecera-letra.directive';
-import { AltaUsuarioComponent } from './components/alta-usuario/alta-usuario.component';
-import { ListaCursosComponent } from './components/lista-cursos/lista-cursos.component';
+import { CoreModule } from './core/core.module';
+import { NavBarComponent } from './core/components/nav-bar/nav-bar.component';
+import { SideMenuComponent } from './core/components/side-menu/side-menu.component';
+import { SharedModule } from './shared/shared.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    ToolbarComponent,
-    ContenidoComponent,
-    FormularioComponent,
-    TablaComponent,
-    PadreComponent,
-    NombreApellidoPipe,
-    CabeceraLetraDirective,
-    AltaUsuarioComponent,
-    ListaCursosComponent
+    NavBarComponent,
+    SideMenuComponent
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule,
+    AppRoutingModule,
     BrowserAnimationsModule,
-    FormsModule,
-    MaterialModule
+    CoreModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

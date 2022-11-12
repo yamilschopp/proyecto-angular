@@ -1,0 +1,38 @@
+<h1 mat-dialog-title appDirectiveTitle>Consultar Estudiante</h1>
+<div mat-dialog-content>
+    <div class="datos">
+        <h2>Datos Personales</h2>
+        <div class="row">
+            <div class="col-3">
+                DNI: {{estudiante.dni}}
+            </div>
+            <div class="col-3">
+                Apellido: {{estudiante.apellido}}
+            </div>
+            <div class="col-3">
+                Nombre: {{estudiante.nombre}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                Nacimiento: {{estudiante.fechaNacimiento | date: 'dd/MM/yyyy'}}
+            </div>
+            <div class="col-6">
+                Alta: {{estudiante.fechaAlta | date: 'dd/MM/yyyy'}}
+            </div>
+        </div>
+    </div>
+
+    <div class="cursos">
+        <h2>Cursos</h2>
+        <div class="row">
+            <div class="col-4" *ngFor="let item of joinedEstudiantes">
+                 {{item.nombreCurso}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row  justify-content-md-center">
+        <button mat-raised-button color="warn" mat-dialog-close> Cerrar</button>
+    </div>
+</div>
