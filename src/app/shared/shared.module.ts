@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import { ConvertirBooleanoPipe } from './pipe/convertir-booleano.pipe';
-
-
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -15,13 +14,15 @@ import { ConvertirBooleanoPipe } from './pipe/convertir-booleano.pipe';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule
 
   ],
   exports: [
     MaterialModule,
     ReactiveFormsModule,
-    ConvertirBooleanoPipe
+    ConvertirBooleanoPipe,
+    HttpClientModule
   ]
 
 })

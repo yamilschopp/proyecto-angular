@@ -23,7 +23,7 @@ export class EditCourseComponent implements OnInit {
   ) { 
     this.id= Number(this._Activatedroute.snapshot.paramMap.get("id"));
 
-    this.curso = this.cursoService.obtenerCursoId(this.id);
+    // this.curso = this.cursoService.obtenerCursoId(this.id);
 
 
     this.formCourse = new FormGroup({

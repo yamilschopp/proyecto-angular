@@ -24,7 +24,7 @@ export class ListCourseComponent implements OnInit {
 
   ngOnInit(): void {
     this.cursos$ = this.cursoService.obtenerCursos().pipe(
-      map((cursos: Course[]) => cursos.filter((curso: Course) => curso.deleted ==false))
+      // map((cursos: Course[]) => cursos.filter((curso: Course) => curso.deleted ==false))
       );
   }
   
@@ -35,6 +35,6 @@ export class ListCourseComponent implements OnInit {
     }
   }
   editarCurso(id: number){
-    this.router.navigate(['features/cursos/edit',{id:id}]);
+    this.router.navigate(['features/cursos/edit',{id: id}]);
   }
 }

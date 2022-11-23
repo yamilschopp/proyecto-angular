@@ -37,11 +37,11 @@ export class ListStudentsComponent implements OnInit {
   ) {
     this.estudiantes$ = this.estudianteService
       .obtenerEstudiantes()
-      .pipe(
-        map((cursos: Students[]) =>
-          cursos.filter((curso: Students) => curso.deleted == false)
-        )
-      );
+      // .pipe(
+      //   map((cursos: Students[]) =>
+      //     cursos.filter((curso: Students) => curso.deleted == false)
+      //   )
+      // );
     this.suscripcion = this.estudiantes$.subscribe({
       next: (estudiantes: Students[]) => {
         this.estudiantes = estudiantes;

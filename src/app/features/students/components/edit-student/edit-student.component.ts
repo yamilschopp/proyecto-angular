@@ -23,7 +23,7 @@ export class EditStudentComponent implements OnInit {
     private _Activatedroute:ActivatedRoute,
   ) { 
     this.id= Number(this._Activatedroute.snapshot.paramMap.get("id"));
-    this.estudiante = this.estudianteService.obtenerEstudianteId(this.id);
+    // this.estudiante = this.estudianteService.obtenerEstudianteId(this.id);
 
 
     this.formStudent = new FormGroup({
