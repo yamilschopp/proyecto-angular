@@ -1,6 +1,6 @@
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { Students } from 'src/app/models/students';
 import { environment } from 'src/environments/environment';
 
@@ -51,11 +51,27 @@ export class StudentsService {
   }
   obtenerEstudianteId(id:number){
     // return this.estudiantes[id-1];
+    return this.http.get<Students>(`${environment.api}/estudiantes/${id}`, {
+      headers: new HttpHeaders({
+        'content-type': 'application/json',
+        'encoding': 'UTF-8'
+      })
+    }).pipe(
+      catchError(this.manejarError)
+    )
   }
 
   agregarEstudiante(estudiante: Students){
     // this.estudiantes.push(estudiante);
     // this.estudiantesSubject.next(this.estudiantes);
+    this.http.post(`${environment.api}/estudiantes/`, estudiante, {
+      headers: new HttpHeaders({
+        'content-type': 'application/json',
+        'encoding': 'UTF-8'
+      })
+    }).pipe(
+      catchError(this.manejarError)
+    ).subscribe(console.log);
   }
   eliminarEstudiante(id:number){
     // let indice = this.estudiantes.findIndex((c: Students) => c.idStudent ===id)
@@ -63,6 +79,10 @@ export class StudentsService {
     //   this.estudiantes[indice].deleted = true;
     // }
     // this.estudiantesSubject.next(this.estudiantes);
+    this.http.delete<Students>(`${environment.api}/estudiantes/${id}`).pipe(
+      catchError(this.manejarError)
+    ).subscribe(console.log);
+    alert("Registro eliminado"); 
   }
   editarEstudiante(estudiante: Students){
     // let indice = this.estudiantes.findIndex((c: Students) => c.idStudent === estudiante.idStudent);
@@ -70,7 +90,19 @@ export class StudentsService {
     //   this.estudiantes[indice] = estudiante;
     // }
     // this.estudiantesSubject.next(this.estudiantes);
+    this.http.put<Students>(`${environment.api}/estudiantes/${estudiante.idStudent}`, estudiante).pipe(
+      catchError(this.manejarError)
+    ).subscribe(console.log);
   }
 
+  private manejarError(error: HttpErrorResponse){
+    if(error.error instanceof ErrorEvent){
+      console.warn('Error del lado del cliente', error.error.message);
+    }else{
+      console.warn('Error del lado del servidor', error.error.message);
+    }
+
+    return throwError(() => new Error('Error en la comunicacion HTTP'));
+  }
 
 }

@@ -19,7 +19,7 @@ export class ListStudentsComponent implements OnInit {
   estudiante!: Students;
   estudiantes$!: Observable<Students[]>;
   estudiantes!: Array<Students>;
-  suscripcion: Subscription;
+  suscripcion!: Subscription;
   columnasEstudiantes: string[] = [
     'id',
     'dni',
@@ -35,27 +35,29 @@ export class ListStudentsComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog
   ) {
-    this.estudiantes$ = this.estudianteService
-      .obtenerEstudiantes()
-      // .pipe(
-      //   map((cursos: Students[]) =>
-      //     cursos.filter((curso: Students) => curso.deleted == false)
-      //   )
-      // );
-    this.suscripcion = this.estudiantes$.subscribe({
-      next: (estudiantes: Students[]) => {
-        this.estudiantes = estudiantes;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
+
     this.dataSourceEstudiantes = new MatTableDataSource<Students>(
-      this.estudiantes
+      // this.estudiantes
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.estudiantes$ = this.estudianteService.obtenerEstudiantes()
+    .pipe(
+      map((estudiantes: Students[]) =>
+        estudiantes.filter((estudiante: Students) => estudiante.deleted == false)
+      )
+    );
+  this.suscripcion = this.estudiantes$.subscribe({
+    next: (estudiantes: Students[]) => {
+      this.estudiantes = estudiantes;
+      this.dataSourceEstudiantes.data = this.estudiantes;
+    },
+    error: (error) => {
+      console.error(error);
+    },
+  });
+  }
 
   ngOnDestroy(): void {
     this.suscripcion.unsubscribe();
