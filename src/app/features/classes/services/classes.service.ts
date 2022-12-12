@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -9,50 +9,25 @@ import { Classes } from '../../../models/classes';
 })
 export class ClassesService {
 
-  // clases: Classes[] = [
-  //   {
-  //     id:1,
-  //     idCourse: 1,
-  //     idStudent: [1,2,3],
-  //     inicio: new Date('2022-08-1'),
-  //     fin:  new Date('2022-11-31'),
-  //     deleted: false,
-  //     available: true,
-  //   },
-  //   {
-  //     id:2,
-  //     idCourse: 2,
-  //     idStudent: [2,3],
-  //     inicio: new Date('2022-08-1'),
-  //     fin:  new Date('2022-12-31'),
-  //     deleted: false,
-  //     available: true,
-  //   },
-  //   {
-  //     id:3,
-  //     idCourse: 3,
-  //     idStudent: [1],
-  //     inicio: new Date('2022-08-1'),
-  //     fin:  new Date('2023-01-31'),
-  //     deleted: false,
-  //     available: true,
-  //   },
-  // ]
-  // private clasesSubject: BehaviorSubject<Classes[]>;
+  clases: Classes[] = []
+  private clasesSubject: BehaviorSubject<Classes[]>;
 
   constructor(
     private http: HttpClient
   ) { 
-    // this.clasesSubject = new BehaviorSubject<Classes[]>(this.clases);
+    this.clasesSubject = new BehaviorSubject<Classes[]>(this.clases);
+    this.obtener().subscribe({
+      next: (data: Classes[]) => {
+        this.clases = data;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+  });
   }
 
   obtener(): Observable<Classes[]>{
-    // return this.clasesSubject.asObservable();
-    return this.http.get<Classes[]>(`${environment.api}/clases`)
-  }
-  obtenerId(id:number){
-    // return this.clases[id-1];
-    return this.http.get<Classes>(`${environment.api}/clases/${id}`, {
+    return this.http.get<Classes[]>(`${environment.api}/classes`, {
       headers: new HttpHeaders({
         'content-type': 'application/json',
         'encoding': 'UTF-8'
@@ -61,81 +36,102 @@ export class ClassesService {
       catchError(this.manejarError)
     )
   }
+
+  obtenerId(id:number){
+    this.obtener().subscribe({
+      next: (data: Classes[]) => {
+        this.clases = data;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+  });
+    const resultado = this.clases.find(x => x.id == id);
+    return resultado;
+  }
+
+
+
   actualizarEstado(idCurso:number){
-    // let clasesActualizadas = this.clases.filter(item => item.idCourse === idCurso);
-    // for(let i of clasesActualizadas){
-    //   i.available=false;
-    //   let indice = this.clases.findIndex((c: Classes) => c.id === i.id);
-    //   if(indice > -1){
-    //     this.clases[indice] = i;
-    //     }
-    //   this.clasesSubject.next(this.clases);
+    let clasesActualizadas = this.clases.filter(item => item.idCourse === idCurso);
+    for(let i of clasesActualizadas){
+      i.available=false;
+      let indice = this.clases.findIndex((c: Classes) => c.id === i.id);
+      if(indice > -1){
+        this.clases[indice] = i;
+        }
+      this.clasesSubject.next(this.clases);
     }
   }
 
   agregar(item: Classes){
-    // this.clases.push(item);
-    // this.clasesSubject.next(this.clases);
-    this.http.post(`${environment.api}/clases/`, Classes, {
+        this.http.post(`${environment.api}/classes/`, item, {
       headers: new HttpHeaders({
         'content-type': 'application/json',
         'encoding': 'UTF-8'
       })
     }).pipe(
       catchError(this.manejarError)
-    ).subscribe(console.log);
+    ).subscribe();
   }
   
   eliminar(id:number){
-    // let indice = this.clases.findIndex((c: Classes) => c.id ===id)
-    // if(indice > -1){
-    //   this.clases[indice].deleted = true;
-    // }
-    // this.clasesSubject.next(this.clases);
-    this.http.delete<Classes>(`${environment.api}/clases/${id}`).pipe(
+    const item = this.obtenerId(id);
+    if(item ==undefined){
+      console.log("error");
+    }
+    else{
+      item.deleted = true;
+    }
+    
+    this.http.put<Classes>(`${environment.api}/classes/${id}`, item).pipe(
       catchError(this.manejarError)
-    ).subscribe(console.log);
-    alert("Registro eliminado"); 
+    ).subscribe();
   }
 
   eliminarAlumno(idE:number,idC:number){
-    // let indice = this.clases.findIndex((c: Classes) => c.id ===idC)
-    // if(indice > -1){
-    //   for( let i of this.clases[indice].idStudent){
-    //     if(i === idE){
-    //       const indice2 = this.clases[indice].idStudent.indexOf(i);
-    //       this.clases[indice].idStudent.splice(indice2,1);
-    //     }
-    //   }
-    // }
-    // this.clasesSubject.next(this.clases);
-  }
-  agregarAlumno(idE:number,idC:number){
-    // let indice = this.clases.findIndex((c: Classes) => c.id ===idC)
-    // let agregar :boolean = true;
-    // if(indice > -1){
+    let clase = this.obtenerId(idC);
+    console.log(clase);
+    let eliminar: boolean = false;
+    for(let i of clase!.idStudents) {
+      if(i == Number(idE) && clase != undefined){
+        let indice2 = clase.idStudents.indexOf(i);
+        clase?.idStudents.splice(Number(indice2),1);
+        eliminar=true;
+      }
+      
+    }
+    if(eliminar){
 
-    //   for( let i of this.clases[indice].idStudent){
-    //     if(i === idE){
-    //       agregar=false;
-    //     }
-    //   }
-    //   if(agregar){
-    //     this.clases[indice].idStudent.push(idE);
-    //   }
-    // }
-    // this.clasesSubject.next(this.clases);
+      this.http.put<Classes>(`${environment.api}/classes/${idC}`, clase).pipe(
+        catchError(this.manejarError)
+      ).subscribe();
+    }
   }
+
+  agregarAlumno(idE:number,idC:number){
+    let clase = this.obtenerId(idC);
+    let agregar: boolean = true;
+    for(let i of clase!.idStudents) {
+      if(i == Number(idE)){
+        agregar= false;
+      }
+    }
+    if(agregar){
+      clase?.idStudents.push(Number(idE));
+      this.http.put<Classes>(`${environment.api}/classes/${idC}`, clase).pipe(
+        catchError(this.manejarError)
+      ).subscribe();
+    }
+
+     
+  }
+
 
   editar(item: Classes){
-    // let indice = this.clases.findIndex((c: Classes) => c.id === item.id);
-    // if(indice > -1){
-    //   this.clases[indice] = item;
-    // }
-    // this.clasesSubject.next(this.clases);
-    this.http.put<Classes>(`${environment.api}/estudiantes/${item.idStudent}`, estudiante).pipe(
+    this.http.put<Classes>(`${environment.api}/classes/${item.id}`, item).pipe(
       catchError(this.manejarError)
-    ).subscribe(console.log);
+    ).subscribe();
   }
 
   private manejarError(error: HttpErrorResponse){

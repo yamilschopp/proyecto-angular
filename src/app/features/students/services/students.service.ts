@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { Students } from 'src/app/models/students';
@@ -8,50 +8,25 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class StudentsService {
-  // estudiantes: Students[]=[
-  //   {
-  //     idStudent:1,
-  //     dni: 35752721,
-  //     nombre: 'Yamil',
-  //     apellido: 'Schopp',
-  //     fechaNacimiento: new Date('1991-01-4'),
-  //     fechaAlta: new Date('2022-01-1'),
-  //     deleted: false,
-  //   },
-  //   {
-  //     idStudent:2,
-  //     dni: 3356782,
-  //     nombre: 'Nicolas',
-  //     apellido: 'Schopp',
-  //     fechaNacimiento: new Date('1989-03-20'),
-  //     fechaAlta: new Date('2022-01-1'),
-  //     deleted: false,
-  //   },
-  //   {
-  //     idStudent:3,
-  //     dni: 30567898,
-  //     nombre: 'Romina',
-  //     apellido: 'Balbin',
-  //     fechaNacimiento: new Date('1986-04-16'),
-  //     fechaAlta: new Date('2022-01-1'),
-  //     deleted: false,
-  //   },
-  // ]
-  // private estudiantesSubject: BehaviorSubject<Students[]>;
+  estudiantes: Students[]=[]
+  private estudiantesSubject: BehaviorSubject<Students[]>;
 
   constructor(
     private http: HttpClient
   ) { 
-    // this.estudiantesSubject = new BehaviorSubject<Students[]>(this.estudiantes);
+    this.estudiantesSubject = new BehaviorSubject<Students[]>(this.estudiantes);
+    this.obtenerEstudiantes().subscribe({
+      next: (data: Students[]) => {
+        this.estudiantes = data;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+  });
   }
 
   obtenerEstudiantes(): Observable<Students[]>{
-    // return this.estudiantesSubject.asObservable();
-    return this.http.get<Students[]>(`${environment.api}/estudiantes`)
-  }
-  obtenerEstudianteId(id:number){
-    // return this.estudiantes[id-1];
-    return this.http.get<Students>(`${environment.api}/estudiantes/${id}`, {
+    return this.http.get<Students[]>(`${environment.api}/estudiantes`, {
       headers: new HttpHeaders({
         'content-type': 'application/json',
         'encoding': 'UTF-8'
@@ -61,9 +36,20 @@ export class StudentsService {
     )
   }
 
+  obtenerEstudianteId(id:number){
+    this.obtenerEstudiantes().subscribe({
+      next: (data: Students[]) => {
+        this.estudiantes = data;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+  });
+    const resultado = this.estudiantes.find(x => x.idStudent == id);
+    return resultado;
+  }
+
   agregarEstudiante(estudiante: Students){
-    // this.estudiantes.push(estudiante);
-    // this.estudiantesSubject.next(this.estudiantes);
     this.http.post(`${environment.api}/estudiantes/`, estudiante, {
       headers: new HttpHeaders({
         'content-type': 'application/json',
@@ -71,28 +57,27 @@ export class StudentsService {
       })
     }).pipe(
       catchError(this.manejarError)
-    ).subscribe(console.log);
+    ).subscribe();
   }
+
   eliminarEstudiante(id:number){
-    // let indice = this.estudiantes.findIndex((c: Students) => c.idStudent ===id)
-    // if(indice > -1){
-    //   this.estudiantes[indice].deleted = true;
-    // }
-    // this.estudiantesSubject.next(this.estudiantes);
-    this.http.delete<Students>(`${environment.api}/estudiantes/${id}`).pipe(
+    const estudiante = this.obtenerEstudianteId(id);
+    if(estudiante ==undefined){
+      console.log("error");
+    }
+    else{
+      estudiante.deleted = true;
+    }
+    
+    this.http.put<Students>(`${environment.api}/estudiantes/${id}`, estudiante).pipe(
       catchError(this.manejarError)
-    ).subscribe(console.log);
-    alert("Registro eliminado"); 
+    ).subscribe();
   }
+
   editarEstudiante(estudiante: Students){
-    // let indice = this.estudiantes.findIndex((c: Students) => c.idStudent === estudiante.idStudent);
-    // if(indice > -1){
-    //   this.estudiantes[indice] = estudiante;
-    // }
-    // this.estudiantesSubject.next(this.estudiantes);
     this.http.put<Students>(`${environment.api}/estudiantes/${estudiante.idStudent}`, estudiante).pipe(
       catchError(this.manejarError)
-    ).subscribe(console.log);
+    ).subscribe();
   }
 
   private manejarError(error: HttpErrorResponse){

@@ -11,7 +11,7 @@ import { CoursesService } from '../../services/courses.service';
 })
 export class EditCourseComponent implements OnInit {
 
-  curso!: Course;
+  curso!: any;
   suscripcion: any;
   formCourse!: FormGroup;
   id!:number;
@@ -23,7 +23,7 @@ export class EditCourseComponent implements OnInit {
   ) { 
     this.id= Number(this._Activatedroute.snapshot.paramMap.get("id"));
 
-    // this.curso = this.cursoService.obtenerCursoId(this.id);
+    this.curso = this.cursoService.obtenerCursoId(this.id);
 
 
     this.formCourse = new FormGroup({
@@ -40,13 +40,22 @@ export class EditCourseComponent implements OnInit {
     
   }
   save(){
+    let imgSource=this.formCourse.value.img ;
+    if(imgSource !==''){
+      imgSource=imgSource;
+    }
+    else{
+      imgSource='../../../assets/img/regular.jpg';
+    }
+
     let c: Course = {
       id: this.id,
       nombre: this.formCourse.value.nombre,
       profesor: this.formCourse.value.profesor,
-      img: '../../../assets/img/'+ this.formCourse.value.img,
+      img: imgSource,
       deleted: false,
     }
+
 
     this.cursoService.editarCurso(c);
 

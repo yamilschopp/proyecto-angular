@@ -1,21 +1,25 @@
 <mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side">
-    <ul>
-      <li>
-        <a mat-button routerLink="features/estudiantes"> Estudiantes</a>
-      </li>
-      <li>
-        <a mat-button routerLink="features/cursos"> Cursos</a>
-      </li>
-      <li>
-        <a mat-button routerLink="features/clases"> Clases</a>
-      </li>
-    </ul>
-  </mat-drawer>
-
-  <div class="example-sidenav-content">
-    <button mat-icon-button color="primary" (click)="drawer.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-  </div>
-</mat-drawer-container>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+        <ul>
+            <li>
+                <a mat-button routerLink="features/estudiantes"> Estudiantes</a>
+            </li>
+            <li>
+                <a mat-button routerLink="features/cursos"> Cursos</a>
+            </li>
+            <li>
+                <a mat-button routerLink="features/clases"> Clases</a>
+            </li>
+            <li>
+                <a mat-button routerLink="features/usuarios"> Usuarios</a>
+            </li>
+        </ul>
+    </mat-drawer>
+  
+    <div class="example-sidenav-content">
+        <button mat-icon-button color="primary" (click)="drawer.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+    </div>
+  
+  </mat-drawer-container>

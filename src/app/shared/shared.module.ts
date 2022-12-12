@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 
+
 @NgModule({
   declarations: [
     ConvertirBooleanoPipe
@@ -15,14 +16,13 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     ReactiveFormsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
 
   ],
   exports: [
     MaterialModule,
     ReactiveFormsModule,
     ConvertirBooleanoPipe,
-    HttpClientModule
   ]
 
 })

@@ -1,0 +1,15 @@
+.backGround{
+    padding: 10px;
+    width: 80%;
+    background-color: #f8f4f4;
+    border-radius: 20px;
+    color: black;
+}
+.row{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+button{
+    width: 30%;
+}

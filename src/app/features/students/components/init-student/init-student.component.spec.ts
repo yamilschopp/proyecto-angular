@@ -23,3 +23,4 @@ describe('InitStudentComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

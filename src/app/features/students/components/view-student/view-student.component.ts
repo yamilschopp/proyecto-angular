@@ -33,47 +33,14 @@ export class ViewStudentComponent implements OnInit {
       );
     this.estudiante = this.data.dataKey;
     this.cursos$ = this.cursoService.obtenerCursos();
+    
 
   }
 
   ngOnInit(): void {
-    this.crearClasesCursos();
-    this.joinedEstudiantes= this.crearArregloEstudiantes().filter(item => item.idEstudiante === this.estudiante.idStudent);
+    
   }
 
 
-  crearClasesCursos(){
-    combineLatest([
-      this.clases$,this.cursos$
-    ]).subscribe(([arrayOne, arrayTwo]) => {
-      this.joinedCursos = arrayOne.map(item => ({
-        ...arrayTwo.find(t => t.id === item.idCourse),
-        ...item
-      }));
-    });
-  }
-
-  crearArregloEstudiantes(){
-    let clasesEstudiantes =[
-      {
-        idEstudiante:0,
-        idClase:0,
-        nombreCurso:''
-      }
-    ];
-    for(let i of this.joinedCursos){
-      for(let x of i.idStudent){
-          clasesEstudiantes.push(
-            {
-              idEstudiante: x,
-              idClase: i.id,
-              nombreCurso: i.nombre +' - ' + i.profesor
-            }
-            );
-      }
-    }
-    return clasesEstudiantes;
-
-  }
 
 }

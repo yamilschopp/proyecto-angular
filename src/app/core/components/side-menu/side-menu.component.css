@@ -11,10 +11,19 @@
   background-color: white;
 }
 
+.example-sidenav{
+  background-color: rgba(3, 43, 151, 0.822);
+  color: beige;
+}
+
 ul {
   list-style: none;
 }
 
 li {
   margin-bottom: 10px;
+} 
+
+li:hover{
+  background-color: white;
 }

@@ -58,7 +58,7 @@ export class AddClassComponent implements OnInit {
     let c: Classes = {
       id: idMax+1,
       idCourse: this.formClass.value.idCourse,
-      idStudent: [],
+      idStudents: [],
       inicio: this.formClass.value.inicio,
       fin: this.formClass.value.fin,
       deleted: false,

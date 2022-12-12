@@ -1,3 +1,7 @@
 .size{
     height: 8vh;
 }
+.flex{
+    display: flex;
+    justify-content: flex-end;
+}

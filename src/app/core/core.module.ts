@@ -4,9 +4,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { NoFoundComponent } from './components/no-found/no-found.component';
-import { MaterialModule } from '../shared/material.module';
-
-
+import { SharedModule } from '../shared/shared.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +15,8 @@ import { MaterialModule } from '../shared/material.module';
   ],
   imports: [
     CommonModule,
-    MaterialModule,
+    SharedModule,
+    AuthenticationModule
   ]
 })
 export class CoreModule { }

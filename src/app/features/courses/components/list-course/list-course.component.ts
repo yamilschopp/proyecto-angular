@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { Course } from 'src/app/models/courses';
@@ -13,8 +13,9 @@ import { Classes } from 'src/app/models/classes';
 })
 export class ListCourseComponent implements OnInit {
 
-  cursos$!: Observable<Course[]>
-  clase!: Classes[]
+  cursos$!: Observable<Course[]>;
+  clase!: Classes[];
+  suscripcion: any;
 
   constructor(
     private cursoService: CoursesService,
@@ -24,17 +25,33 @@ export class ListCourseComponent implements OnInit {
 
   ngOnInit(): void {
     this.cursos$ = this.cursoService.obtenerCursos().pipe(
-      // map((cursos: Course[]) => cursos.filter((curso: Course) => curso.deleted ==false))
+      map((cursos: Course[]) => cursos.filter((curso: Course) => curso.deleted ==false))
       );
-  }
+
+      this.suscripcion = this.cursos$.subscribe({
+        next: (cursos: Course[]) => {
+        },
+        error: (error) => {
+          console.error(error);
+        }
+    });
+    }
+    
+
   
+  ngOnDestroy():void{
+    this.suscripcion.unsubscribe();
+  }
+
   eliminarCurso(id: number){
     if(confirm("Esta seguro de eliminar el elemento id: "+id)) {
-      this.claseService.actualizarEstado(id);
       this.cursoService.eliminarCurso(id);
+      this.cursos$ = this.cursoService.obtenerCursos().pipe(
+        map((cursos: Course[]) => cursos.filter((curso: Course) => curso.deleted ==false))
+        );
     }
   }
   editarCurso(id: number){
-    this.router.navigate(['features/cursos/edit',{id: id}]);
+    this.router.navigate(['features/cursos/edit',{id:id}]);
   }
 }

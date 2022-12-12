@@ -1,0 +1,24 @@
+<h1>Inicio de sesion</h1>
+
+<form [formGroup]="formulario" (ngSubmit)="login()">
+    <div class="container-fluid backGround">
+        <div class="row">
+            <mat-form-field appearance="fill" class="fill">
+                <mat-label>Usuario</mat-label>
+                <input matInput formControlName="usuario">
+                <p *ngIf="formulario.get('usuario')?.touched && formulario.get('usuario')?.errors?.['required']">Ingrese el nombre de usuario</p>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill" class="fill">
+                <mat-label>Contrasena</mat-label>
+                <input type="password" matInput formControlName="contrasena">
+                <p *ngIf="formulario.get('contrasena')?.touched && formulario.get('contrasena')?.errors?.['required']">Ingrese la contraseña</p>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <button type="submit" mat-raised-button color="primary" [disabled]="formulario.invalid">Entrar</button>
+        </div>
+    </div>
+
+</form>
