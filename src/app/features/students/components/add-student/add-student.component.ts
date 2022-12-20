@@ -1,36 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { StudentState } from 'src/app/models/student.state';
 import { Students } from 'src/app/models/students';
-import { StudentsService } from '../../services/students.service';
+import { addStudent } from '../../state/students.actions';
 
 @Component({
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',
   styleUrls: ['./add-student.component.css']
 })
-export class AddStudentComponent implements OnInit {
+export class AddStudentComponent {
 
-  estudiantes!: Students[];
+  formulario!: FormGroup;
   suscripcion: any;
-  formStudent!: FormGroup;
-  id!:number;
+  idMax: number = 1;
+  estudiantes!: Students[];
+  estudiantes$!: Observable<Students[]>;
 
   constructor(
-    private estudianteService: StudentsService,
-    private router: Router,
-    private _Activatedroute:ActivatedRoute,
-  ) { 
-    this.suscripcion = this.estudianteService.obtenerEstudiantes().subscribe({
-      next: (item: Students[]) => {
-        this.estudiantes = item;
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
-
-    this.formStudent = new FormGroup({
+    public dialogRef: MatDialogRef<AddStudentComponent>,
+    private store: Store<StudentState>,
+  )
+  {
+    this.formulario = new FormGroup({
       dni: new FormControl('', [Validators.required]),
       nombre: new FormControl('', [Validators.required]),
       apellido: new FormControl('', [Validators.required]),
@@ -40,25 +35,36 @@ export class AddStudentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-  }
-  ngOnDestroy(){
     
   }
+  ngAfterViewInit(): void{
+
+    this.suscripcion = this.estudiantes$.subscribe({
+      next: (estudiantes: Students[]) => {
+        this.estudiantes = estudiantes;
+        this.idMax = Math.max.apply(null, this.estudiantes.map(o => o.idStudent));
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+  ngOnDestroy(): void{
+    this.suscripcion.unsubscribe();
+  }
   save(){
-
-    let idMax:number = Math.max.apply(null, this.estudiantes.map(o => o.idStudent));
-
-    let c: Students = {
-      idStudent: idMax+1,
-      dni: this.formStudent.value.dni,
-      nombre: this.formStudent.value.nombre,
-      apellido: this.formStudent.value.apellido,
-      fechaNacimiento: this.formStudent.value.fechaNacimiento,
-      fechaAlta: this.formStudent.value.fechaAlta,
-      deleted: false,
+    const student : Students = {
+      idStudent : this.idMax+1,
+      dni: this.formulario.value.dni,
+      nombre: this.formulario.value.nombre,
+      apellido: this.formulario.value.apellido,
+      fechaNacimiento: this.formulario.value.fechaNacimiento,
+      fechaAlta: this.formulario.value.fechaAlta,
     }
-      this.estudianteService.agregarEstudiante(c);
-      this.router.navigate(['features/estudiantes']);
+    this.store.dispatch(addStudent({student: student}));
+    this.dialogRef.close();
+  }
+  cancelar(){
+    this.dialogRef.close()
   }
 }

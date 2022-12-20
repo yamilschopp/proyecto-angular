@@ -3,5 +3,4 @@ export interface Course{
     nombre: string;
     profesor: string;
     img: string;
-    deleted: boolean;
 }

@@ -2,22 +2,28 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UsersRoutingModule } from './users-routing.module';
-import { AddUserComponent } from './components/add-user/add-user.component';
-import { InitUserComponent } from './components/init-user/init-user.component';
-import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { ListUserComponent } from './components/list-user/list-user.component';
+import { AddUsersComponent } from './components/add-users/add-users.component';
+import { EditUsersComponent } from './components/edit-users/edit-users.component';
+import { ListUsersComponent } from './components/list-users/list-users.component';
+import { InitUsersComponent } from './components/init-users/init-users.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { UserEffects } from './state/user.effects';
+import { userFeatureKey, reducerUser } from './state/user.reducer';
 
 
 @NgModule({
   declarations: [
-    AddUserComponent,
-    InitUserComponent,
-    EditUserComponent,
-    ListUserComponent
+    AddUsersComponent,
+    EditUsersComponent,
+    ListUsersComponent,
+    InitUsersComponent
   ],
   imports: [
     CommonModule,
+    StoreModule.forFeature(userFeatureKey, reducerUser),
+    EffectsModule.forFeature([UserEffects]),
     UsersRoutingModule,
     SharedModule
   ]

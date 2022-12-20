@@ -1,0 +1,26 @@
+<div *ngIf="(cargando$ | async)">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!(cargando$ | async)">
+    <div class="row justify-content-md-center marginTop">
+        
+        <div *ngFor="let usuario of users$ | async" class="col-md-3 cardsize cardMargin marginTop">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Id: {{ usuario.id }}</mat-card-title>
+                <mat-card-title>Usuario: {{ usuario.nombre }}</mat-card-title>
+                <mat-card-subtitle>Password: {{ usuario.contrasena }}</mat-card-subtitle>
+            </mat-card-header>
+        
+            <mat-card-actions align="end">
+                <button mat-icon-button color="primary" (click)="editar(usuario)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="eliminar(usuario.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+        </div>
+</div>

@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { SessionService } from '../../services/session.service';
 import { Users } from '../../../../models/users';
 import { map, Observable } from 'rxjs';
+import { UserState } from 'src/app/models/user.state';
+import { Store } from '@ngrx/store';
+import { loadUsers } from 'src/app/features/users/state/user.actions';
+import { selectStateUsers } from 'src/app/features/users/state/user.selectors';
 
 @Component({
   selector: 'app-login',
@@ -15,16 +19,19 @@ export class LoginComponent implements OnInit {
   usuariosCompletos!: Users[];
   usuarios$!: Observable<Users[]>;
   formulario: FormGroup
+  users$!:Observable<Users[]>;
   suscripcion:any;
   constructor(
     private sesionService: SessionService,
-    private router: Router
+    private router: Router,
+    private store: Store <UserState>
   ) { 
     this.formulario = new FormGroup({
       usuario: new FormControl('',[Validators.required]),
       contrasena: new FormControl('',[Validators.required])
   })
   this.usuarios$ = sesionService.obtenerDatos();
+  this.store.dispatch(loadUsers());
 
 }
 
@@ -37,6 +44,8 @@ export class LoginComponent implements OnInit {
         console.error(error);
       }
     });
+    
+    this.users$= this.store.select(selectStateUsers);
   }
   ngOnDestroy(): void{
     

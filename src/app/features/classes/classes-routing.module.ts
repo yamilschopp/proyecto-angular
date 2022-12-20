@@ -1,18 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InitClassComponent } from './components/init-class/init-class.component';
-import { AddClassComponent } from './components/add-class/add-class.component';
-import { EditClassComponent } from './components/edit-class/edit-class.component';
+import { InitClassesComponent } from './components/init-classes/init-classes.component';
 import { ListClassesComponent } from './components/list-classes/list-classes.component';
-import { AddStudentClassComponent } from './components/add-student-class/add-student-class.component';
-
+import { AddClassesComponent } from './components/add-classes/add-classes.component';
+import { AddStudentClassesComponent } from './components/add-student-classes/add-student-classes.component';
+import { EditClassesComponent } from './components/edit-classes/edit-classes.component';
 
 const routes: Routes = [
-  {path: '', component: InitClassComponent, children:[
+  {path: '', component: InitClassesComponent, children:[
     {path: '', component: ListClassesComponent},
-    {path: 'add', component: AddClassComponent},
-    {path: 'addStudent', component: AddStudentClassComponent},
-    {path: 'edit', component: EditClassComponent},
+    {path: 'add', component: AddClassesComponent},
+    {path: 'addStudent', component: AddStudentClassesComponent},
+    {path: 'edit', component: EditClassesComponent},
   ] 
 }
 ];

@@ -1,0 +1,50 @@
+<div class="container-fluid text-center" mat-dialog-content>
+    <div class="row justify-content-md-center">
+        <form [formGroup]="formulario" class="backGround">
+            
+            <div class="row justify-content-md-center">
+                <div class="col-md-8">
+
+                    
+                    <mat-form-field appearance="fill" class="fill">
+                        <mat-label>Nombre del Curso</mat-label>
+                        <mat-select formControlName="idCourse">
+                            <mat-option *ngFor="let item of cursos$ | async" [value]="item.id">
+                                {{item.nombre}} - {{item.profesor}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-5">
+                    <mat-form-field appearance="fill" class="fill">
+                        <mat-label >Fecha de Inicio</mat-label>
+                        <input matInput [matDatepicker]="inicio" formControlName="inicio" class="colorFont">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="inicio"></mat-datepicker-toggle>
+                        <mat-datepicker #inicio></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-5">
+                    <mat-form-field appearance="fill" class="fill">
+                        <mat-label >Fecha de Fin</mat-label>
+                        <input matInput [matDatepicker]="fin" formControlName="fin" class="colorFont">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="fin"></mat-datepicker-toggle>
+                        <mat-datepicker #fin></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-12">
+                    <button mat-raised-button color="primary" type="submit" (click)="save()" [disabled]="formulario.invalid">Agregar Clase</button>
+                    <button mat-button (click)="cancelar()">Cancelar</button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    
+</div>

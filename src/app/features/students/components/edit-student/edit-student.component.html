@@ -1,7 +1,6 @@
-<div class="container-fluid text-center">
-
+<div class="container-fluid text-center" mat-dialog-content>
     <div class="row justify-content-md-center">
-        <form [formGroup]="formStudent" class="backGround">
+        <form [formGroup]="formulario" class="backGround">
             
             <div class="row justify-content-md-center">
             <div class="col-md-2">
@@ -45,8 +44,9 @@
 
         </div>
             <div class="row justify-content-md-center">
-                <div class="col-md-12">
-                    <button mat-raised-button color="primary" type="submit" (click)="save()" [disabled]="formStudent.invalid">Actualizar estudiante</button>
+                <div class="col-md-12"mat-dialog-actions>
+                    <button mat-raised-button color="primary" type="submit" (click)="save()" [disabled]="formulario.invalid">Actualizar estudiante</button>
+                    <button mat-button (click)="cancelar()">Cancelar</button>
                 </div>
             </div>
 

@@ -11,13 +11,13 @@ describe('ListClassesComponent', () => {
       declarations: [ ListClassesComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ListClassesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -2,23 +2,38 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ClassesRoutingModule } from './classes-routing.module';
+import { AddClassesComponent } from './components/add-classes/add-classes.component';
+import { EditClassesComponent } from './components/edit-classes/edit-classes.component';
 import { ListClassesComponent } from './components/list-classes/list-classes.component';
-import { SharedModule } from '../../shared/shared.module';
-import { AddClassComponent } from './components/add-class/add-class.component';
-import { EditClassComponent } from './components/edit-class/edit-class.component';
-import { InitClassComponent } from './components/init-class/init-class.component';
-import { AddStudentClassComponent } from './components/add-student-class/add-student-class.component';
+import { InitClassesComponent } from './components/init-classes/init-classes.component';
+import { AddStudentClassesComponent } from './components/add-student-classes/add-student-classes.component';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { ClassesEffects } from './state/classes.effects';
+import { classesFeatureKey, reducerClass } from './state/classes.reducer';
+import { StudentsEffects } from '../students/state/students.effects';
+import { reducerStudent, studentsFeatureKey } from '../students/state/students.reducer';
+import { coursesFeatureKey, reducerCourse } from '../courses/state/courses.reducer';
+import { CoursesEffects } from '../courses/state/courses.effects';
+
 
 @NgModule({
   declarations: [
-    InitClassComponent,
+    AddClassesComponent,
+    EditClassesComponent,
     ListClassesComponent,
-    AddClassComponent,
-    EditClassComponent,
-    AddStudentClassComponent
+    InitClassesComponent,
+    AddStudentClassesComponent
   ],
   imports: [
     CommonModule,
+    StoreModule.forFeature(classesFeatureKey, reducerClass),
+    EffectsModule.forFeature([ClassesEffects]),
+    StoreModule.forFeature(studentsFeatureKey, reducerStudent),
+    EffectsModule.forFeature([StudentsEffects]),
+    StoreModule.forFeature(coursesFeatureKey, reducerCourse),
+    EffectsModule.forFeature([CoursesEffects]),
     ClassesRoutingModule,
     SharedModule
   ]

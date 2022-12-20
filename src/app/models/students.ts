@@ -5,5 +5,4 @@ export interface Students{
     apellido: string;
     fechaNacimiento: Date;
     fechaAlta: Date;
-    deleted: boolean;
 }

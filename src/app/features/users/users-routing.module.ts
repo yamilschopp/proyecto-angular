@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InitUserComponent } from './components/init-user/init-user.component';
-import { ListUserComponent } from './components/list-user/list-user.component';
-import { AddUserComponent } from './components/add-user/add-user.component';
-import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { InitUsersComponent } from './components/init-users/init-users.component';
+import { ListUsersComponent } from './components/list-users/list-users.component';
+import { AddUsersComponent } from './components/add-users/add-users.component';
+import { EditUsersComponent } from './components/edit-users/edit-users.component';
 
 const routes: Routes = [
-  {path: '', component: InitUserComponent, children:[
-    {path: '', component: ListUserComponent},
-    {path: 'add', component: AddUserComponent},
-    {path: 'edit', component: EditUserComponent},
+  {path: '', component: InitUsersComponent, children:[
+    {path: '', component: ListUsersComponent},
+    {path: 'add', component: AddUsersComponent},
+    {path: 'edit', component: EditUsersComponent},
   ] 
 }
 ];

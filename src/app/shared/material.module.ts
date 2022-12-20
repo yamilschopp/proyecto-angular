@@ -14,6 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { MatInputModule} from '@angular/material/input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
     imports:[
@@ -31,7 +32,8 @@ import {MatSelectModule} from '@angular/material/select';
         MatNativeDateModule,
         MatInputModule,
         MatExpansionModule,
-        MatSelectModule
+        MatSelectModule,
+        MatProgressSpinnerModule
     ],
     exports:[
         MatToolbarModule,
@@ -48,7 +50,8 @@ import {MatSelectModule} from '@angular/material/select';
         MatNativeDateModule,
         MatInputModule,
         MatExpansionModule,
-        MatSelectModule
+        MatSelectModule,
+        MatProgressSpinnerModule
     ]
 })
 

@@ -37,9 +37,9 @@ export class NavBarComponent implements OnInit {
     this.suscripcion.unsubscribe();
   }
 
-  // logout(){
-  //   this.sesionService.logout(this.sesion.usuarioActivo?.nombre, this.sesion.usuarioActivo?.contrasena)
+  logout(){
+    this.sesionService.logout(this.sesion.usuarioActivo?.nombre, this.sesion.usuarioActivo?.contrasena)
 
-  //     this.router.navigate(['authentication/login']);
-  // }
+      this.router.navigate(['authentication/login']);
+  }
 }

@@ -1,8 +1,12 @@
-<div class="container-fluid">
-    
+
+<div *ngIf="(cargando$ | async)">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!(cargando$ | async)">   
     <div class="row  justify-content-md-center">
         <div class="col-10">
-            <table mat-table [dataSource]="dataSourceEstudiantes" class="table table-hover mat-elevation-z8 col-md-12 marginTop">
+            <table mat-table [dataSource]="dataSource" class="table table-hover mat-elevation-z8 col-md-12 marginTop">
                 
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef  mat-sort-header class="text-center">Id</th>
@@ -33,10 +37,7 @@
                 <ng-container matColumnDef="acciones">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let estudiante">
-                        <button mat-icon-button (click)="consultar(estudiante.idStudent)">
-                            <mat-icon color="accent">search</mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="editar(estudiante.idStudent)">
+                        <button mat-icon-button (click)="editar(estudiante)">
                             <mat-icon color="primary">edit</mat-icon>
                         </button>
                         <button mat-icon-button (click)="eliminar(estudiante.idStudent)">
@@ -48,6 +49,5 @@
                 <tr mat-row *matRowDef="let row; columns: columnasEstudiantes" ></tr>
             </table>
         </div>
-        
     </div>
 </div>

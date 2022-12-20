@@ -31,7 +31,8 @@ export class SessionService {
       usuarioActivo: {
         id: userId,
         nombre: nombre,
-        contrasena: contrasena
+        contrasena: contrasena,
+        admin: this.userService.obtenerUsuarioNombre(nombre)?.admin
       }
       
     }
@@ -46,7 +47,8 @@ export class SessionService {
       usuarioActivo: {
         id : userId,
         nombre: nombre,
-        contrasena: contrasena
+        contrasena: contrasena,
+        admin: this.userService.obtenerUsuarioNombre(nombre)?.admin
       }
   }
   this.sesionSubject.next(sesion);

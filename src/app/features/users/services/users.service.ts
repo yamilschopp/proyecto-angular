@@ -1,33 +1,26 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
+import { Users } from 'src/app/models/users';
 import { environment } from 'src/environments/environment';
-import { Users } from '../../../models/users';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-
   usuarios: Users[]= []
-private usuariosSubject: BehaviorSubject<Users[]>;
+  private usuariosSubject: BehaviorSubject<Users[]>;
+
 
   constructor(
     private http: HttpClient
   ) { 
 
+    
     this.usuariosSubject = new BehaviorSubject<Users[]>(this.usuarios);
-    this.obtenerUsuarios().subscribe({
-      next: (data: Users[]) => {
-        this.usuarios = data;
-      },
-      error: (error) => {
-        console.error(error);
-      }
-  });
   }
-  
 
+  
   obtenerUsuarios(): Observable<Users[]>{
     return this.http.get<Users[]>(`${environment.api}/usuarios`, {
       headers: new HttpHeaders({
@@ -65,29 +58,16 @@ private usuariosSubject: BehaviorSubject<Users[]>;
     let resultado = this.usuarios.find(x => x.id == id);
     return resultado;
   }
-  agregarUsuario(item: Users){
-    this.http.post(`${environment.api}/usuarios/`, item, {
-      headers: new HttpHeaders({
-        'content-type': 'application/json',
-        'encoding': 'UTF-8'
-      })
-    }).pipe(
-      catchError(this.manejarError)
-    ).subscribe(console.log);
+  add(item: Users): Observable<Users>{
+    return this.http.post<Users>(`${environment.api}/usuarios`, item);
   }
 
-  eliminarUsuario(nombre:string){
-    const usuario = this.obtenerUsuarioNombre(nombre);
-
-    this.http.delete<Users>(`${environment.api}/usuarios/${usuario?.id}`).pipe(
-      catchError(this.manejarError)
-    ).subscribe(console.log);
-    
+  delete(id:number): Observable<Users>{
+    return this.http.delete<Users>(`${environment.api}/usuarios/${id}`);
   }
-  editarUsuario(item: Users){
-    this.http.put<Users>(`${environment.api}/usuarios/${item?.id}`, item).pipe(
-      catchError(this.manejarError)
-    ).subscribe(console.log);
+
+  edit(item: Users): Observable<Users>{
+    return this.http.put<Users>(`${environment.api}/usuarios/${item.id}`, item);
   }
 
 
@@ -101,4 +81,5 @@ private usuariosSubject: BehaviorSubject<Users[]>;
 
     return throwError(() => new Error('Error en la comunicacion HTTP'));
   }
+
 }

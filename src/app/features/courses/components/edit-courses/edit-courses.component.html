@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>Editar Curso</h1>
+<div mat-dialog-content>
+    <div class="row justify-content-md-center">
+        <form [formGroup]="formulario">
+            <div class="row justify-content-md-center">
+                <div class="col-md-5">
+                    <mat-form-field appearance="fill" >
+                        <mat-label>Nombre del curso</mat-label>
+                        <input matInput formControlName="nombre" class="colorFont">
+                    </mat-form-field>
+    
+                    
+                </div>
+                <div class="col-md-5">
+                    <mat-form-field appearance="fill" class="fill">
+                        <mat-label>Profesor del curso</mat-label>
+                        <input matInput formControlName="profesor" class="colorFont">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-4">
+                    <mat-form-field appearance="fill" class="fill">
+                        <mat-label >Nombre imagen del curso</mat-label>
+                        <input matInput formControlName="img" class="colorFont">
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-12" mat-dialog-actions>
+            <button mat-raised-button color="primary" (click)="editar()">Editar Curso</button>
+            <button mat-button (click)="cancelar()">Cancelar</button>
+        </div>
+    </div>
+</div>

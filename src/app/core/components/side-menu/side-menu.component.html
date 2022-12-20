@@ -1,4 +1,4 @@
-<mat-drawer-container class="example-container" autosize>
+<mat-drawer-container class="example-container" autosize *ngIf="sesion.sesionActiva ==true">
     <mat-drawer #drawer class="example-sidenav" mode="side">
         <ul>
             <li>
@@ -11,7 +11,7 @@
                 <a mat-button routerLink="features/clases"> Clases</a>
             </li>
             <li>
-                <a mat-button routerLink="features/usuarios"> Usuarios</a>
+                <a mat-button (click)="irUsuario()"> Usuarios</a>
             </li>
         </ul>
     </mat-drawer>

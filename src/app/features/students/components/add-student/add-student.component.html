@@ -1,32 +1,31 @@
-<div class="container-fluid text-center">
-
+<div class="container-fluid text-center" mat-dialog-content>
     <div class="row justify-content-md-center">
-        <form [formGroup]="formStudent" class="backGround">
+        <form [formGroup]="formulario" class="backGround">
             
             <div class="row justify-content-md-center">
-            <div class="col-md-3">
-                <mat-form-field appearance="fill" >
-                    <mat-label>Dni del Estudiante</mat-label>
-                    <input matInput formControlName="dni" class="colorFont">
-                </mat-form-field>
-
-                
+                <div class="col-md-3">
+                    <mat-form-field appearance="fill" >
+                        <mat-label>Dni del Estudiante</mat-label>
+                        <input matInput formControlName="dni" class="colorFont">
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="fill" class="fill">
-                    <mat-label>Nombre del Estudiante</mat-label>
-                    <input matInput formControlName="nombre" class="colorFont">
-                </mat-form-field>
+            <div class="row justify-content-md-center">
+                <div class="col-md-5">
+                    <mat-form-field appearance="fill" class="fill">
+                        <mat-label>Nombre del Estudiante</mat-label>
+                        <input matInput formControlName="nombre" class="colorFont">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-5">
+                    <mat-form-field appearance="fill" class="fill">
+                        <mat-label>Apellido del Estudiante</mat-label>
+                        <input matInput formControlName="apellido" class="colorFont">
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="fill" class="fill">
-                    <mat-label>Apellido del Estudiante</mat-label>
-                    <input matInput formControlName="apellido" class="colorFont">
-                </mat-form-field>
-            </div>
-        </div>
         <div class="row justify-content-md-center">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <mat-form-field appearance="fill" class="fill">
                     <mat-label >Fecha de Nacimiento</mat-label>
                     <input matInput [matDatepicker]="fechaNacimiento" formControlName="fechaNacimiento" class="colorFont">
@@ -35,7 +34,7 @@
                     <mat-datepicker #fechaNacimiento></mat-datepicker>
                 </mat-form-field>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <mat-form-field appearance="fill" class="fill">
                     <mat-label >Fecha de Alta</mat-label>
                     <input matInput [matDatepicker]="fechaAlta" formControlName="fechaAlta" class="colorFont">
@@ -47,8 +46,9 @@
 
         </div>
             <div class="row justify-content-md-center">
-                <div class="col-md-12">
-                    <button mat-raised-button color="primary" type="submit" (click)="save()" [disabled]="formStudent.invalid">Agregar estudiante</button>
+                <div class="col-md-12"mat-dialog-actions>
+                    <button mat-raised-button color="primary" type="submit" (click)="save()" [disabled]="formulario.invalid">Agregar estudiante</button>
+                    <button mat-button (click)="cancelar()">Cancelar</button>
                 </div>
             </div>
 

@@ -1,6 +1,6 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { Students } from 'src/app/models/students';
 import { environment } from 'src/environments/environment';
 
@@ -10,22 +10,13 @@ import { environment } from 'src/environments/environment';
 export class StudentsService {
   estudiantes: Students[]=[]
   private estudiantesSubject: BehaviorSubject<Students[]>;
-
   constructor(
     private http: HttpClient
-  ) { 
+  ) {
     this.estudiantesSubject = new BehaviorSubject<Students[]>(this.estudiantes);
-    this.obtenerEstudiantes().subscribe({
-      next: (data: Students[]) => {
-        this.estudiantes = data;
-      },
-      error: (error) => {
-        console.error(error);
-      }
-  });
-  }
+   }
 
-  obtenerEstudiantes(): Observable<Students[]>{
+   getAll(): Observable<Students[]>{
     return this.http.get<Students[]>(`${environment.api}/estudiantes`, {
       headers: new HttpHeaders({
         'content-type': 'application/json',
@@ -36,8 +27,8 @@ export class StudentsService {
     )
   }
 
-  obtenerEstudianteId(id:number){
-    this.obtenerEstudiantes().subscribe({
+  getId(id:number){
+    this.getAll().subscribe({
       next: (data: Students[]) => {
         this.estudiantes = data;
       },
@@ -49,45 +40,27 @@ export class StudentsService {
     return resultado;
   }
 
-  agregarEstudiante(estudiante: Students){
-    this.http.post(`${environment.api}/estudiantes/`, estudiante, {
-      headers: new HttpHeaders({
-        'content-type': 'application/json',
-        'encoding': 'UTF-8'
-      })
-    }).pipe(
-      catchError(this.manejarError)
-    ).subscribe();
+  add(estudiante: Students): Observable<Students>{
+    return this.http.post<Students>(`${environment.api}/estudiantes`, estudiante);
   }
 
-  eliminarEstudiante(id:number){
-    const estudiante = this.obtenerEstudianteId(id);
-    if(estudiante ==undefined){
-      console.log("error");
-    }
-    else{
-      estudiante.deleted = true;
-    }
-    
-    this.http.put<Students>(`${environment.api}/estudiantes/${id}`, estudiante).pipe(
-      catchError(this.manejarError)
-    ).subscribe();
+  delete(id:number){
+    return this.http.delete<Students>(`${environment.api}/estudiantes/${id}`);
   }
 
-  editarEstudiante(estudiante: Students){
-    this.http.put<Students>(`${environment.api}/estudiantes/${estudiante.idStudent}`, estudiante).pipe(
-      catchError(this.manejarError)
-    ).subscribe();
+  edit(estudiante: Students){
+    return this.http.put<Students>(`${environment.api}/estudiantes/${estudiante.idStudent}`, estudiante);
   }
 
   private manejarError(error: HttpErrorResponse){
     if(error.error instanceof ErrorEvent){
       console.warn('Error del lado del cliente', error.error.message);
     }else{
-      console.warn('Error del lado del servidor', error.error.message);
+      console.warn('Error del servidor', error.error.message);
     }
 
     return throwError(() => new Error('Error en la comunicacion HTTP'));
   }
+
 
 }

@@ -5,13 +5,12 @@ import { NoFoundComponent } from './core/components/no-found/no-found.component'
 import { AuthenticationGuard } from './core/guards/authentication.guard';
 
 const routes: Routes = [
+
   {path: 'inicio', component: HomeComponent,canActivate: [AuthenticationGuard]},
   {path: '', redirectTo: 'authentication', pathMatch: 'full'},
   {path: 'features', loadChildren:() => import('./features/features.module').then(m => m.FeaturesModule),canActivate: [AuthenticationGuard] },
   {path: 'authentication', loadChildren:() => import('./core/authentication/authentication.module').then(m => m.AuthenticationModule) },
   {path: '**', component: NoFoundComponent},
-  
-  
 ];
 
 @NgModule({
