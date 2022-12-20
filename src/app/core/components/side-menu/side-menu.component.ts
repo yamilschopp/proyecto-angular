@@ -49,14 +49,6 @@ export class SideMenuComponent implements OnInit, OnDestroy {
   irUsuario(){
     this.router.navigate(['features/usuarios']);
     
-    // if(this.admin ==false || this.admin == undefined){
-    //   alert("No posee permisos suficientes");
-    // }
-    // else{
-    //   this.router.navigate(['features/usuarios']);
-    // }
-
-    
   }
 
 }
